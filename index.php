@@ -1,27 +1,59 @@
 <?php
 
  require_once "Cliente.php";
+ require_once "PessoaJuridica.php";
+ require_once "PessoaFisica.php";
+ require_once "EnderecoEspecifico.php";
 
- $cliente1 = new cliente();
- $cliente1->setNome("Felipe");
- $cliente2 = new cliente();
- $cliente2->setNome("Ana");
- $cliente3 = new cliente();
- $cliente3->setNome("Geferson");
- $cliente4 = new cliente();
- $cliente4->setNome("Debora");
- $cliente5 = new cliente();
- $cliente5->setNome("Anderson");
- $cliente6 = new cliente();
- $cliente6->setNome("Edson");
- $cliente7 = new cliente();
- $cliente7->setNome("Rudinei");
- $cliente8 = new cliente();
- $cliente8->setNome("Vanderlei");
- $cliente9 = new cliente();
- $cliente9->setNome("Carlos");
- $cliente10 = new cliente();
- $cliente10->setNome("Hugo");
+ $cliente1 = new PessoaFisica();
+ $cliente1->setNome("Felipe")
+           ->setClassificacao(5);
+ $cliente2 = new PessoaFisica();
+ $cliente2->setNome("Ana")
+          ->setClassificacao(3);
+ $cliente3 = new PessoaFisica();
+ $cliente3->setNome("Geferson")
+           ->setClassificacao(4);
+ $cliente4 = new PessoaFisica();
+ $cliente4->setNome("Debora")
+          ->setClassificacao(3);
+ $cliente5 = new PessoaFisica();
+ $cliente5->setNome("Anderson")
+          ->setClassificacao(4);
+ $cliente6 = new PessoaFisica();
+ $cliente6->setNome("Edson")
+          ->setClassificacao(5);
+ $cliente7 = new PessoaFisica();
+ $cliente7->setNome("Rudinei")
+          ->setClassificacao(3);
+ $cliente8 = new PessoaFisica();
+ $cliente8->setNome("Vanderlei")
+          ->setClassificacao(3);
+ $cliente9 = new PessoaFisica();
+ $cliente9->setNome("Carlos")
+          ->setClassificacao(4);
+ $cliente10 = new PessoaFisica();
+ $cliente10->setNome("Hugo")
+           ->setClassificacao(2);
+
+ $cliente11 = new PessoaJuridica();
+ $cliente11->setNome("Julio")
+           ->setClassificacao(3);
+ $cliente12 = new PessoaJuridica();
+ $cliente12->setNome("Rose")
+           ->setClassificacao(2);
+ $cliente13 = new PessoaJuridica();
+ $cliente13->setNome("Vagner")
+           ->setClassificacao(3);
+ $cliente14 = new PessoaJuridica();
+ $cliente14->setNome("Eliezer")
+           ->setClassificacao(4);
+ $cliente15 = new EnderecoEspecifico();
+ $cliente15->setNome("Leandro")
+           ->setClassificacao(5);
+ $cliente16 = new EnderecoEspecifico();
+ $cliente16->setNome("Matheus")
+           ->setClassificacao(1);
 
  if(isset($_GET['ordem'])){
  	$ordem=$_GET['ordem'];
@@ -49,22 +81,29 @@
 	<div class="container">
 		<div class="row">
 		  <div class="span3"><br>
-		  	<table class="table table-condensed">
+		  	<table class="table table table-striped">
 				<thead>
 				   <tr>
-				     <th>Lista de Cliente</th>
+				     <th>Nome</th>
+				     <th>Pessoa</th>
+				     <th>Classificação</th>
 				   </tr>
 				</thead>
 				<tbody>
 			  	<?php 
-			  	$clientes = [$cliente1,$cliente2,$cliente3,$cliente4,$cliente5,$cliente6,$cliente7,$cliente8,$cliente9,$cliente10];
+			  	$clientes = [$cliente1,$cliente2,$cliente3,$cliente4,$cliente5,$cliente6,$cliente7,$cliente8,$cliente9,$cliente10,$cliente11,$cliente12,$cliente13,$cliente14,$cliente15,$cliente16];
 			  	if($ordem =="descendente"){
 
 			  		krsort($clientes);
 			  	}
 	             array_walk($clientes, function ($x){
 	             	$nome=$x->getNome();
-	             	echo "<tr><td><a href='dadosCliente.php?nome=$nome'>".$nome."</a></td></tr>";
+	             	$tipo=$x->getTipo();
+	             	$classificacao=$x->getClassificacao();
+
+	             	echo "<tr><td><a href='dadosCliente.php?nome=$nome'>".$nome."</a></td>";
+	             	echo "<td>".$tipo."</td>";
+	             	echo "<td>".$classificacao."</td></tr>";
 	             	
 	             });
 	            ?>

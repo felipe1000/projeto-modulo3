@@ -2,7 +2,7 @@
 
 class Cliente{
 	
-	private $nome;
+	protected $nome;
 	private $idade;
 	private $cpf;
 	private $endereco;
@@ -49,7 +49,8 @@ class Cliente{
 	
 	public function setEndereco($endereco)
 	{
-	    return $this->endereco = $endereco;
+	    $this->endereco = $endereco;
+	    return $this;
 	}
 
 }
