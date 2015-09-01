@@ -1,9 +1,10 @@
 <?php
 
  require_once "Cliente.php";
+ require_once "Fisica.php";
+ require_once "Juridica.php";
  require_once "PessoaJuridica.php";
  require_once "PessoaFisica.php";
- require_once "EnderecoEspecifico.php";
 
  $cliente1 = new PessoaFisica();
  $cliente1->setNome("Felipe")
@@ -48,10 +49,10 @@
  $cliente14 = new PessoaJuridica();
  $cliente14->setNome("Eliezer")
            ->setClassificacao(4);
- $cliente15 = new EnderecoEspecifico();
+ $cliente15 = new PessoaJuridica();
  $cliente15->setNome("Leandro")
            ->setClassificacao(5);
- $cliente16 = new EnderecoEspecifico();
+ $cliente16 = new PessoaJuridica();
  $cliente16->setNome("Matheus")
            ->setClassificacao(1);
 

@@ -1,8 +1,8 @@
 <?php
-class PessoaJuridica extends Cliente
+class PessoaJuridica extends Cliente implements Juridica
 {
 	private $tipo;
-	private $classificacao;
+	private $cnpj;
 
 	public function __construct(){
 
@@ -13,20 +13,15 @@ class PessoaJuridica extends Cliente
 	{
 	    return $this->tipo;
 	}
-	
-	public function getClassificacao()
+
+	public function getCnpj()
 	{
-	    return $this->classificacao;
+	    return $this->cnpj;
 	}
 	
-	public function setClassificacao($x)
+	public function setCnpj($cnpj)
 	{
-		$estrela="<i class='icon-star-empty'></i>";
-		for ($i=0; $i < $x ; $i++) { 
-
-			$this->classificacao .= $estrela;
-		}
+	    $this->cnpj = $cnpj;
 	    return $this;
 	}
 }
-?>

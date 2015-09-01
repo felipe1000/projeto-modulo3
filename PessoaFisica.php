@@ -1,8 +1,8 @@
 <?php
-class PessoaFisica extends Cliente
-{
+class PessoaFisica extends Cliente implements Fisica{
 	private $tipo;
-	private $classificacao;
+	private $cpf;
+	
 
 	public function __construct(){
 
@@ -12,20 +12,15 @@ class PessoaFisica extends Cliente
 	{
 	    return $this->tipo;
 	}
-	
-	public function getClassificacao()
+
+	public function getCpf()
 	{
-	    return $this->classificacao;
+	    return $this->cpf;
 	}
 	
-	public function setClassificacao($x)
+	public function setCpf($cpf)
 	{
-		$estrela="<i class='icon-star-empty'></i>";
-		for ($i=0; $i < $x ; $i++) { 
-
-			$this->classificacao .= $estrela;
-		}
+	    $this->cpf = $cpf;
 	    return $this;
 	}
 }
-?>

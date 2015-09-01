@@ -4,8 +4,9 @@ class Cliente{
 	
 	protected $nome;
 	private $idade;
-	private $cpf;
+	private $classificacao;
 	private $endereco;
+	private $enderecoEspecifico;
 
 
 	public function getNome(){
@@ -30,17 +31,6 @@ class Cliente{
 	    $this->idade = $idade;
 	    return $this;
 	}
-	
-	public function getCpf()
-	{
-	    return $this->cpf;
-	}
-	
-	public function setCpf($cpf)
-	{
-	    $this->cpf = $cpf;
-	    return $this;
-	}
 
 	public function getEndereco()
 	{
@@ -51,6 +41,30 @@ class Cliente{
 	{
 	    $this->endereco = $endereco;
 	    return $this;
+	}
+
+	public function getClassificacao()
+	{
+	    return $this->classificacao;
+	}
+	
+	public function setClassificacao($x)
+	{
+		$estrela="<i class='icon-star-empty'></i>";
+		for ($i=0; $i < $x ; $i++) { 
+
+			$this->classificacao .= $estrela;
+		}
+	    return $this;
+	}
+	public function getEnderecoEspecifico()
+	{
+	    return $this->enderecoEspecifico;
+	}
+	
+	public function setEnderecoEspecifico($enderecoEspecifico)
+	{
+	    return $this->enderecoEspecifico = $enderecoEspecifico;
 	}
 
 }

@@ -1,9 +1,10 @@
 <?php
 
  require_once "Cliente.php";
+ require_once "Fisica.php";
+ require_once "Juridica.php";
  require_once "PessoaJuridica.php";
  require_once "PessoaFisica.php";
- require_once "EnderecoEspecifico.php";
 
  $cliente1 = new PessoaFisica();
  $cliente1->setNome("Felipe")
@@ -59,33 +60,33 @@
  $cliente11 = new PessoaJuridica();
  $cliente11->setNome("Julio")
   		  ->setIdade('50')
-		  ->setCpf('333546651-07')
+		  ->setCnpj('333546651-07')
 		  ->setEndereco('Av.Martins, n.1589');
  $cliente12 = new PessoaJuridica();
  $cliente12->setNome("Rose")
   		  ->setIdade('45')
-		  ->setCpf('002465802-67')
+		  ->setCnpj('002465802-67')
 		  ->setEndereco('Av.Das Cucuias, n.1589');
  $cliente13 = new PessoaJuridica();
  $cliente13->setNome("Vagner")
   		  ->setIdade('35')
-		  ->setCpf('008695412-70')
+		  ->setCnpj('008695412-70')
 		  ->setEndereco('Rua.Treze, n.1589');
  $cliente14 = new PessoaJuridica();
  $cliente14->setNome("Eliezer")
   		  ->setIdade('33')
-		  ->setCpf('011900023-62')
+		  ->setCnpj('011900023-62')
 		  ->setEndereco('Av.Pinheiro, n.1589');
- $cliente15 = new EnderecoEspecifico();
+ $cliente15 = new PessoaJuridica();
  $cliente15->setNome("Leandro")
   		  ->setIdade('22')
-		  ->setCpf('802465721-40')
+		  ->setCnpj('802465721-40')
 		  ->setEndereco('Av.Manolo, n.1201')
 		  ->setEnderecoEspecifico("Av.Orlando Aires, n,222");
- $cliente16 = new EnderecoEspecifico();
+ $cliente16 = new PessoaJuridica();
  $cliente16->setNome("Matheus")
   		  ->setIdade('16')
-		  ->setCpf('520879456-98')
+		  ->setCnpj('520879456-98')
 		  ->setEndereco('Av.Das Indias, n.1589')
 		  ->setEnderecoEspecifico("Av.Flores Cunha, n,102");
 
@@ -128,10 +129,10 @@
 			  		if($nome==$verifique){
 			  			echo "<tr><td>Nome: ".$x->getNome()."</td></tr>";
 	             		echo "<tr><td>Idade: ".$x->getIdade()."</td></tr>";
-		                echo "<tr><td>Cpf: ".$x->getCpf()."</td></tr>";
+		                echo ($x instanceof PessoaFisica) ? "<tr><td>Cpf: ".$x->getCpf() : "<tr><td>Cnpj: ".$x->getCnpj()."</td></tr>";
 		                echo "<tr><td>Endereço: ".$x->getEndereco()."</td></tr>";
 		                echo "<tr><td>Pessoa: ".$x->getTipo()."</td></tr>";
-		                if(method_exists($x, 'getEnderecoEspecifico')){
+		                if(!null==$x->getEnderecoEspecifico()){
 		                	echo "<tr><td><strong>Endereco Especifico: ".$x->getEnderecoEspecifico()."</strong></td></tr>";
 		                }
 		   
