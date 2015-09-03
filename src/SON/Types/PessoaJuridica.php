@@ -1,9 +1,16 @@
 <?php
+
+namespace SON\Types;
+
+use SON\Cliente;
+use SON\Util\Juridica;
+
 class PessoaJuridica extends Cliente implements Juridica
 {
 	private $tipo;
 	private $cnpj;
 
+	
 	public function __construct(){
 
 		$this->tipo = "Juridica";

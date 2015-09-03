@@ -1,6 +1,8 @@
 <?php
 
-class Cliente{
+namespace SON;
+
+abstract class Cliente{
 	
 	protected $nome;
 	private $idade;

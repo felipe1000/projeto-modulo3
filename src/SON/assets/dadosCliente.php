@@ -1,10 +1,11 @@
 <?php
 
- require_once "Cliente.php";
- require_once "Fisica.php";
- require_once "Juridica.php";
- require_once "PessoaJuridica.php";
- require_once "PessoaFisica.php";
+define('CLASS_DIR', '../../');
+set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
+spl_autoload_register();
+
+use SON\Types\PessoaFisica;
+use SON\Types\PessoaJuridica;
 
  $cliente1 = new PessoaFisica();
  $cliente1->setNome("Felipe")
@@ -99,11 +100,11 @@
 	<meta name="description" content="Projeto- Modulo 3"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>Projeto - Módulo 3</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/bootstrap-responsive.css">
-	<link rel="stylesheet" href="css/estilo.css">
-	<script type="text/javascript" src="js/bootstrap-tab.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../../../css/bootstrap.css">
+	<link rel="stylesheet" href="../../../css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="../../../css/estilo.css">
+	<script type="text/javascript" src="../../../js/bootstrap-tab.js"></script>
+	<script type="text/javascript" src="../../../js/bootstrap.js"></script>
 </head>
 <body>
 
@@ -139,7 +140,7 @@
 	                }
 	            }
 	            ?>
-	            <tr><td><a class="btn btn-info" href='index.php'>Inicio</a></td></tr>
+	            <tr><td><a class="btn btn-info" href='../../../index.php'>Inicio</a></td></tr>
 	            </tbody>
 	        </table>
 		  </div>

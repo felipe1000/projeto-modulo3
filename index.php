@@ -1,10 +1,18 @@
 <?php
 
- require_once "Cliente.php";
- require_once "Fisica.php";
- require_once "Juridica.php";
- require_once "PessoaJuridica.php";
- require_once "PessoaFisica.php";
+define('CLASS_DIR', 'src/');
+set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
+spl_autoload_register();
+
+
+ // require_once "Cliente.php";
+ // require_once "Fisica.php";
+ // require_once "Juridica.php";
+ // require_once "PessoaJuridica.php";
+ // require_once "PessoaFisica.php";
+
+use SON\Types\PessoaFisica;
+use SON\Types\PessoaJuridica;
 
  $cliente1 = new PessoaFisica();
  $cliente1->setNome("Felipe")
@@ -77,7 +85,7 @@
 </head>
 <body>
 
-	<?php include_once("header.php"); ?>
+	<?php include_once("SON/assets/header.php"); ?>
 	
 	<div class="container">
 		<div class="row">
@@ -102,7 +110,7 @@
 	             	$tipo=$x->getTipo();
 	             	$classificacao=$x->getClassificacao();
 
-	             	echo "<tr><td><a href='dadosCliente.php?nome=$nome'>".$nome."</a></td>";
+	             	echo "<tr><td><a href='src/SON/assets/dadosCliente.php?nome=$nome'>".$nome."</a></td>";
 	             	echo "<td>".$tipo."</td>";
 	             	echo "<td>".$classificacao."</td></tr>";
 	             	
@@ -115,7 +123,7 @@
 		  </div>
 	    </div>
     </div>
-    <?php include_once("footer.php"); ?>
+    <?php include_once("SON/assets/footer.php"); ?>
 
 </body>
 </html>

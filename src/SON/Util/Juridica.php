@@ -1,5 +1,7 @@
 <?php
 
+namespace SON\Util;
+
 interface Juridica
 {
 

@@ -1,5 +1,12 @@
 <?php
-class PessoaFisica extends Cliente implements Fisica{
+
+namespace SON\Types;
+
+use SON\Cliente;
+use SON\Util\Fisica;
+
+class PessoaFisica extends Cliente implements Fisica
+{
 	private $tipo;
 	private $cpf;
 	
