@@ -1,6 +1,6 @@
 <?php
 
-define('CLASS_DIR', 'src/');
+define('CLASS_DIR', '../src/');
 set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
 spl_autoload_register();
 
@@ -110,7 +110,7 @@ use SON\Types\PessoaJuridica;
 	             	$tipo=$x->getTipo();
 	             	$classificacao=$x->getClassificacao();
 
-	             	echo "<tr><td><a href='src/SON/assets/dadosCliente.php?nome=$nome'>".$nome."</a></td>";
+	             	echo "<tr><td><a href='../src/SON/assets/dadosCliente.php?nome=$nome'>".$nome."</a></td>";
 	             	echo "<td>".$tipo."</td>";
 	             	echo "<td>".$classificacao."</td></tr>";
 	             	
