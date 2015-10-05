@@ -28,12 +28,44 @@ use SON\DB\clienteDB;
 		<div class="row">
 		  <div class="span3">
 		  	<?php
-		  	$conexao = new \PDO('mysql:host=localhost;dbname=clientes', 'root', '');
-			$conn = new clienteDB($conexao);
-		  	$conn -> Remover();
-		  	$conn -> Criando();
-		  	$conn -> Inserindo();
 
+		  	echo "#### Executando Fixture ####<br>";
+
+			try {
+				$conexao = new \PDO('mysql:host=localhost', 'root', '');
+			}
+			catch (PDOException $e) {
+				print "Erro: " . $e->getMessage() . "<br/>";
+				die();
+			}
+			
+			// echo "Removendo Banco de Dados";
+   //          $conn->query("DROP DATABASE `clientes`;");
+   //          echo " -OK<br>";
+
+            echo "Criando Banco de Dados<br>";
+            $verifica= $conexao ->exec("CREATE DATABASE IF NOT EXISTS `clientes` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `clientes`;");
+            if ( $verifica ) {
+            	echo 'Banco de dados criado com sucesso!<br>';
+            } else {
+            	echo 'Falha ao criar banco de dados!<br>';
+            }
+
+			echo "Criando Tabela<br>";
+			$conexao -> query("CREATE TABLE IF NOT EXISTS `cliente` (
+				`id_cliente` int(10) NOT NULL AUTO_INCREMENT,
+				`nome` varchar(100) NOT NULL,
+				`idade` varchar(3) NOT NULL,
+				`cpf` varchar(12) NOT NULL,
+				`endereco` varchar(500) NOT NULL,
+				`classificacao` varchar(10) NOT NULL,
+				`endereco_especifico` varchar(500) NOT NULL,
+				`tipo` varchar(20) NOT NULL,
+				`cnpj` varchar(20) NOT NULL,
+				PRIMARY KEY (`id_cliente`)) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;");
+		  	echo "Tabela Criada com sucesso <br>";
+		  	echo "#### Fixture Finalizado####<br>";
 		  	?>
 	            
 	        <a class="btn btn-info" href='index.php'>Voltar</a>

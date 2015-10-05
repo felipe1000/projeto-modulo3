@@ -131,7 +131,16 @@ use SON\DB\clienteDB;
                 $stmt->execute();
                 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                $conn->flush($clientes);
+                foreach ($clientes as $x) {
+			  			echo "<tr><td>Nome: ".$x['nome']."</td></tr>";
+	             		echo "<tr><td>Idade: ".$x['idade']."</td></tr>";
+		                echo ($x['tipo']=='fisica') ? "<tr><td>Cpf: ".$x['cpf'] : "<tr><td>Cnpj: ".$x['cnpj']."</td></tr>";
+		                echo "<tr><td>Endereço: ".$x['endereco']."</td></tr>";
+		                echo "<tr><td>Pessoa: ".$x['tipo']."</td></tr>";
+		                if(!null==$x['endereco_especifico']){
+		                	echo "<tr><td><strong>Endereco Especifico: ".$x['endereco_especifico']."</strong></td></tr>";
+		                }
+	            }
 
 			  	
 	            ?>
