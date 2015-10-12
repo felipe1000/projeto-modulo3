@@ -28,6 +28,13 @@ class clienteDB{
 	public function flush(){
 
 		$conn=$this->conexao;
+		
+	    $sql = "SELECT * FROM cliente";
+		$stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        if($stmt->rowCount() <= 0){
+
         $stmt = $conn->prepare("INSERT INTO `cliente` (`id_cliente`, `nome`, `idade`, `cpf`, `endereco`, `classificacao`, `endereco_especifico`, `tipo`, `cnpj`) VALUES
 (1, 'Felipe', '32', '000895666-52', 'Av.João afonso, n.10', '5', '', 'fisica', ''),
 (2, 'Ana', '45', '210785562-12', 'Rua. Carlos Barbosa, n.205', '3', '', 'fisica', ''),
@@ -46,6 +53,8 @@ class clienteDB{
 (15, 'Leandro', '22', '802465721-40', 'Av.Manolo, n.1201', '4', 'Av.Orlando Aires, n,222', 'juridica', '802465721-40'),
 (16, 'Matheus', '16', '520879456-98', 'Av.Das Indias, n.1589', '2', 'Av.Flores Cunha, n,102', 'juridica', '520879456-98');");
         $stmt->execute();
+
+        }
 	}
 
 }
