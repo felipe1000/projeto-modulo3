@@ -203,7 +203,7 @@ use SON\Types\PessoaJuridica;
             $cliente12 ->getCliente()->setEnderecoEspecifico('Av.Ubatuba Reis, n.880');
             $cliente11 ->getCliente()->setCnpj('002753023-57');
             $cliente11 ->getCliente()->getTipo();
-            $cliente11 ->flush();
+            $cliente11 ->flush():
 
       	  	echo "--Dados Inseridos--<br>";
       	  	echo "#### Fixture Finalizado####<br>";
