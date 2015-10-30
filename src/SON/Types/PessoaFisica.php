@@ -9,7 +9,6 @@ class PessoaFisica extends Cliente implements Fisica
 {
 	private $tipo;
 	private $cpf;
-	
 
 	public function __construct(){
 

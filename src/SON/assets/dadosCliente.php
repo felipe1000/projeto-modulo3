@@ -124,13 +124,15 @@ use SON\DB\clienteDB;
 			  	<?php 
 			  	$conexao = new \PDO('mysql:host=localhost;dbname=clientes', 'root', '');
 			  	$conn = new clienteDB($conexao);
-			  	$prepara = $conn ->getConexao();
-			  	$sql = $sql = "SELECT * FROM cliente WHERE nome=:nome";
-			  	$stmt = $prepara->prepare($sql);
-			  	$stmt->bindValue("nome",$nome);
-                $stmt->execute();
-                $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			  	if ($conn ->dadosCliente($nome) == true){
 
+			  		$stmt = $conn->dadosCliente($nome);
+			  		$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			  	}else{
+
+			  		echo "Erro na mostrargem de Dados";
+			  	}
                 foreach ($clientes as $x) {
 			  			echo "<tr><td>Nome: ".$x['nome']."</td></tr>";
 	             		echo "<tr><td>Idade: ".$x['idade']."</td></tr>";

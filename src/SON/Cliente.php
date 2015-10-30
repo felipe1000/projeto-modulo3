@@ -4,7 +4,7 @@ namespace SON;
 
 abstract class Cliente{
 	
-	protected $nome;
+	private $nome;
 	private $idade;
 	private $classificacao;
 	private $endereco;
@@ -52,11 +52,7 @@ abstract class Cliente{
 	
 	public function setClassificacao($x)
 	{
-		$estrela="<i class='icon-star-empty'></i>";
-		for ($i=0; $i < $x ; $i++) { 
-
-			$this->classificacao .= $estrela;
-		}
+		$this->classificacao = $x;
 	    return $this;
 	}
 	public function getEnderecoEspecifico()
@@ -66,7 +62,8 @@ abstract class Cliente{
 	
 	public function setEnderecoEspecifico($enderecoEspecifico)
 	{
-	    return $this->enderecoEspecifico = $enderecoEspecifico;
+	    $this->enderecoEspecifico = $enderecoEspecifico;
+	    return $this;
 	}
 
 }

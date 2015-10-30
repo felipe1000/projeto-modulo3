@@ -4,7 +4,10 @@ define('CLASS_DIR', '../src/');
 set_include_path(get_include_path().PATH_SEPARATOR.CLASS_DIR);
 spl_autoload_register();
 
+use SON\DB\connDB;
 use SON\DB\clienteDB;
+use SON\Types\PessoaFisica;
+use SON\Types\PessoaJuridica;
 
 ?>
 <!DOCTYPE html>
@@ -28,69 +31,184 @@ use SON\DB\clienteDB;
 		<div class="row">
 		  <div class="span3">
 		  	<?php
+            
+		    $conexao = new \PDO('mysql:host=localhost', 'root', '');
+			$conn = new connDB($conexao);
 
-		  	echo "#### Executando Fixture ####<br>";
-
-			try {
-				$conexao = new \PDO('mysql:host=localhost', 'root', '');
-			}
-			catch (PDOException $e) {
-				print "Erro: " . $e->getMessage() . "<br/>";
-				die();
-			}
-			
-			// echo "Removendo Banco de Dados";
-   //          $conn->query("DROP DATABASE `clientes`;");
-   //          echo " -OK<br>";
+		    echo "#### Executando Fixture ####<br>";
+			echo "--Removendo Banco de Dados--<br>";
+            
+            $conn->apagando();
 
             echo "--Criando Banco de Dados--<br>";
-            $verifica= $conexao ->exec("CREATE DATABASE IF NOT EXISTS `clientes` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `clientes`;");
-            if ( $verifica ) {
-            	echo '--Banco de dados criado com sucesso!--<br>';
-            } else {
-            	echo '--Falha ao criar banco de dados!--<br>';
-            }
+            $conn->criandoBanco();
 
 			echo "--Criando Tabela--<br>";
-			$conexao -> query("CREATE TABLE IF NOT EXISTS `cliente` (
-				`id_cliente` int(10) NOT NULL AUTO_INCREMENT,
-				`nome` varchar(100) NOT NULL,
-				`idade` varchar(3) NOT NULL,
-				`cpf` varchar(12) NOT NULL,
-				`endereco` varchar(500) NOT NULL,
-				`classificacao` varchar(10) NOT NULL,
-				`endereco_especifico` varchar(500) NOT NULL,
-				`tipo` varchar(20) NOT NULL,
-				`cnpj` varchar(20) NOT NULL,
-				PRIMARY KEY (`id_cliente`)) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;");
-		  	echo "--Tabela Criada com sucesso-- <br>";
+            $dbname=$conn->getBanco();
+            $conexaoBanco = new \PDO("mysql:host=localhost;dbname={$dbname}","root", "");
+			$conn ->criandoTabela($conexaoBanco);
 
-		  	
-		  	echo "--Inserindo Dados na Tabela--<br>";
-		  	$conexao -> query("INSERT INTO `cliente` (`id_cliente`, `nome`, `idade`, `cpf`, `endereco`, `classificacao`, `endereco_especifico`, `tipo`, `cnpj`) VALUES
-			(1, 'Felipe', '32', '000895666-52', 'Av.João afonso, n.10', '5', '', 'fisica', ''),
-			(2, 'Ana', '45', '210785562-12', 'Rua. Carlos Barbosa, n.205', '3', '', 'fisica', ''),
-			(3, 'Geferson', '35', '507799450-00', 'Rua.Hamburgo, n.24', '4', '', 'fisica', ''),
-			(4, 'Debora', '17', '222581270-52', 'Av.Barão do Cai, n.850', '3', '', 'fisica', ''),
-			(5, 'Anderson', '33', '520123450-88', 'Av.Leopoldina, n.1220', '4', '', 'fisica', ''),
-			(6, 'Edson', '25', '456888809-45', 'Rua.Doze de Dezembro, n.1013', '2', '', 'fisica', ''),
-			(7, 'Rudinei', '45', '569780287-70', 'Av.Baltazar, n.2345', '2', '', 'fisica', ''),
-			(8, 'Vanderlei', '28', '756265287-22', 'Av.XXIV, n.1000', '1', '', 'fisica', ''),
-			(9, 'Carlos', '19', '128715845-20', 'Av.Ladeira, n.2230', '3', '', 'fisica', ''),
-			(10, 'Hugo', '50', '450956165-70', 'Av.Castelo Branco, n.1589', '4', '', 'fisica', ''),
-			(11, 'Julio', '50', '333546651-07', 'Av.Martins, n.1589', '4', '', 'juridica', '333546651-07'),
-			(12, 'Rose', '45', '002465802-67', 'Av.Das Cucuias, n.1589', '2', '', 'juridica', '002465802-67'),
-			(13, 'Vagner', '35', '008695412-70', 'Rua.Treze, n.1589', '3', '', 'juridica', '008695412-70'),
-			(14, 'Eliezer', '33', '011900023-62', 'Av.Pinheiro, n.1589', '2', '', 'juridica', '011900023-62'),
-			(15, 'Leandro', '22', '802465721-40', 'Av.Manolo, n.1201', '4', 'Av.Orlando Aires, n,222', 'juridica', '802465721-40'),
-			(16, 'Matheus', '16', '520879456-98', 'Av.Das Indias, n.1589', '2', 'Av.Flores Cunha, n,102', 'juridica', '520879456-98');");
-		  	
-		  	echo "--Dados Inseridos--<br>";
-		  	echo "#### Fixture Finalizado####<br>";
-		  	?>
-	            
-	        <a class="btn btn-info" href='index.php'>Voltar</a>
+		    echo "--Inserindo Dados na Tabela--<br>";
+		    
+            $fisica = new PessoaFisica();
+            $juridica = new PessoaJuridica();
+        
+            $cliente1 = new clienteDB($conexaoBanco);
+
+            $cliente1 ->persist($fisica);
+            $cliente1 ->getCliente()->setNome('Felipe');
+            $cliente1 ->getCliente()->setClassificacao(5);
+            $cliente1 ->getCliente()->setIdade('32');
+            $cliente1 ->getCliente()->setEndereco('Av.João afonso, n.10');
+            $cliente1 ->getCliente()->setEnderecoEspecifico('');
+            $cliente1 ->getCliente()->setCpf('000895666-52');
+            $cliente1 ->getCliente()->getTipo();
+            $cliente1->flush();
+
+            $cliente2 = new clienteDB($conexaoBanco);
+
+            $cliente2 ->persist($fisica);
+            $cliente2 ->getCliente()->setNome('Ana');
+            $cliente2 ->getCliente()->setClassificacao(3);
+            $cliente2 ->getCliente()->setIdade('45');
+            $cliente2 ->getCliente()->setEndereco('Rua. Carlos Barbosa, n.205');
+            $cliente2 ->getCliente()->setEnderecoEspecifico('');
+            $cliente2 ->getCliente()->setCpf('210785562-12');
+            $cliente2 ->getCliente()->getTipo();
+            $cliente2->flush();
+
+            $cliente3 = new clienteDB($conexaoBanco);
+
+            $cliente3 ->persist($fisica);
+            $cliente3 ->getCliente()->setNome('Geferson');
+            $cliente3 ->getCliente()->setClassificacao(4);
+            $cliente3 ->getCliente()->setIdade('35');
+            $cliente3 ->getCliente()->setEndereco('Rua.Hamburgo, n.24');
+            $cliente3 ->getCliente()->setEnderecoEspecifico('');
+            $cliente3 ->getCliente()->setCpf('507799450-00');
+            $cliente3 ->getCliente()->getTipo();
+            $cliente3->flush();
+
+
+            $cliente4 = new clienteDB($conexaoBanco);
+
+            $cliente4 ->persist($fisica);
+            $cliente4 ->getCliente()->setNome('Anderson');
+            $cliente4 ->getCliente()->setClassificacao(4);
+            $cliente4 ->getCliente()->setIdade('33');
+            $cliente4 ->getCliente()->setEndereco('Av.Leopoldina, n.1220');
+            $cliente4 ->getCliente()->setEnderecoEspecifico('');
+            $cliente4 ->getCliente()->setCpf('520123450-88');
+            $cliente4 ->getCliente()->getTipo();
+            $cliente4->flush();
+
+
+            $cliente5 = new clienteDB($conexaoBanco);
+
+            $cliente5 ->persist($fisica);
+            $cliente5 ->getCliente()->setNome('Edson');
+            $cliente5 ->getCliente()->setClassificacao(2);
+            $cliente5 ->getCliente()->setIdade('25');
+            $cliente5 ->getCliente()->setEndereco('Rua. Carlos Barbosa, n.500');
+            $cliente5 ->getCliente()->setEnderecoEspecifico('');
+            $cliente5 ->getCliente()->setCpf('456888809-45');
+            $cliente5 ->getCliente()->getTipo();
+            $cliente5->flush();
+
+
+            $cliente6 = new clienteDB($conexaoBanco);
+
+            $cliente6 ->persist($fisica);
+            $cliente6 ->getCliente()->setNome('Rudinei');
+            $cliente6 ->getCliente()->setClassificacao(2);
+            $cliente6 ->getCliente()->setIdade('45');
+            $cliente6 ->getCliente()->setEndereco('Av.Baltazar, n.2345');
+            $cliente6 ->getCliente()->setEnderecoEspecifico('');
+            $cliente6 ->getCliente()->setCpf('569780287-70');
+            $cliente6 ->getCliente()->getTipo();
+            $cliente6->flush();
+
+
+            $cliente7 = new clienteDB($conexaoBanco);
+
+            $cliente7 ->persist($fisica);
+            $cliente7 ->getCliente()->setNome('Vanderlei');
+            $cliente7 ->getCliente()->setClassificacao(1);
+            $cliente7 ->getCliente()->setIdade('28');
+            $cliente7 ->getCliente()->setEndereco('Av.XXIV, n.1000');
+            $cliente7 ->getCliente()->setEnderecoEspecifico('');
+            $cliente7 ->getCliente()->setCpf('756265287-22');
+            $cliente7 ->getCliente()->getTipo();
+            $cliente7->flush();
+
+
+            $cliente8 = new clienteDB($conexaoBanco);
+
+            $cliente8 ->persist($fisica);
+            $cliente8 ->getCliente()->setNome('Carlos');
+            $cliente8 ->getCliente()->setClassificacao(3);
+            $cliente8 ->getCliente()->setIdade('35');
+            $cliente8 ->getCliente()->setEndereco('Av.Ladeira, n.2230');
+            $cliente8 ->getCliente()->setEnderecoEspecifico('');
+            $cliente8 ->getCliente()->setCpf('128715845-20');
+            $cliente8 ->getCliente()->getTipo();
+            $cliente8->flush();
+
+
+            $cliente9 = new clienteDB($conexaoBanco);
+
+            $cliente9 ->persist($fisica);
+            $cliente9 ->getCliente()->setNome('Hugo');
+            $cliente9 ->getCliente()->setClassificacao(4);
+            $cliente9 ->getCliente()->setIdade('50');
+            $cliente9 ->getCliente()->setEndereco('Av.Castelo Branco, n.1589');
+            $cliente9 ->getCliente()->setEnderecoEspecifico('');
+            $cliente9 ->getCliente()->setCpf('450956165-70');
+            $cliente9 ->getCliente()->getTipo();
+            $cliente9->flush();
+
+
+            $cliente10 = new clienteDB($conexaoBanco);
+
+            $cliente10 ->persist($fisica);
+            $cliente10 ->getCliente()->setNome('Debora');
+            $cliente10 ->getCliente()->setClassificacao(3);
+            $cliente10 ->getCliente()->setIdade('17');
+            $cliente10 ->getCliente()->setEndereco('Av.Barão do Cai, n.850');
+            $cliente10 ->getCliente()->setEnderecoEspecifico('');
+            $cliente10 ->getCliente()->setCpf('222581270-52');
+            $cliente10 ->getCliente()->getTipo();
+            $cliente10->flush();
+
+            $cliente11 = new clienteDB($conexaoBanco);
+
+            $cliente11 ->persist($juridica);
+            $cliente11 ->getCliente()->setNome('Eliezer');
+            $cliente11 ->getCliente()->setClassificacao(2);
+            $cliente11 ->getCliente()->setIdade('33');
+            $cliente11 ->getCliente()->setEndereco('Av.Pinheiro, n.1589');
+            $cliente11 ->getCliente()->setEnderecoEspecifico('Rua. andarai, n.256');
+            $cliente11 ->getCliente()->setCnpj('011900023-62');
+            $cliente11 ->getCliente()->getTipo();
+            $cliente11 ->flush();
+
+
+            $cliente12 = new clienteDB($conexaoBanco);
+
+            $cliente12 ->persist($juridica);
+            $cliente12 ->getCliente()->setNome('Leandro');
+            $cliente12 ->getCliente()->setClassificacao(3);
+            $cliente12 ->getCliente()->setIdade('22');
+            $cliente12 ->getCliente()->setEndereco('Av.Manolo, n.1201');
+            $cliente12 ->getCliente()->setEnderecoEspecifico('Av.Ubatuba Reis, n.880');
+            $cliente11 ->getCliente()->setCnpj('002753023-57');
+            $cliente11 ->getCliente()->getTipo();
+            $cliente11 ->flush();
+
+      	  	echo "--Dados Inseridos--<br>";
+      	  	echo "#### Fixture Finalizado####<br>";
+      	  	?>    
+	    <a class="btn btn-info" href='index.php'>Voltar</a>
 		  </div>
 	    </div>
     </div>

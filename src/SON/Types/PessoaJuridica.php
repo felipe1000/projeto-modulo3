@@ -20,7 +20,6 @@ class PessoaJuridica extends Cliente implements Juridica
 	{
 	    return $this->tipo;
 	}
-
 	public function getCnpj()
 	{
 	    return $this->cnpj;
