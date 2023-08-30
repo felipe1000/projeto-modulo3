@@ -47,7 +47,7 @@ use SON\Types\PessoaJuridica;
 				</thead>
 				<tbody>
 			  	<?php
-			  	$conexao = new \PDO('mysql:host=localhost;dbname=clientes', 'root', '');
+			  	$conexao = new \PDO('mysql:host=localhost:3306;dbname=clientes', 'root', 'root');
 			  	$conn = new clienteDB($conexao);
 			  	if ($conn->mostrarClientes() == true){
 

@@ -32,7 +32,7 @@ use SON\Types\PessoaJuridica;
 		  <div class="span3">
 		  	<?php
             
-		    $conexao = new \PDO('mysql:host=localhost', 'root', '');
+		    $conexao = new \PDO('mysql:host=localhost:3306', 'root', 'root');
 			$conn = new connDB($conexao);
 
 		    echo "#### Executando Fixture ####<br>";
@@ -45,7 +45,7 @@ use SON\Types\PessoaJuridica;
 
 			echo "--Criando Tabela--<br>";
             $dbname=$conn->getBanco();
-            $conexaoBanco = new \PDO("mysql:host=localhost;dbname={$dbname}","root", "");
+            $conexaoBanco = new \PDO("mysql:host=localhost:3306;dbname={$dbname}","root", "root");
 			$conn ->criandoTabela($conexaoBanco);
 
 		    echo "--Inserindo Dados na Tabela--<br>";
@@ -203,7 +203,7 @@ use SON\Types\PessoaJuridica;
             $cliente12 ->getCliente()->setEnderecoEspecifico('Av.Ubatuba Reis, n.880');
             $cliente11 ->getCliente()->setCnpj('002753023-57');
             $cliente11 ->getCliente()->getTipo();
-            $cliente11 ->flush():
+            $cliente11 ->flush();
 
       	  	echo "--Dados Inseridos--<br>";
       	  	echo "#### Fixture Finalizado####<br>";

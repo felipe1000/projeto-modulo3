@@ -9,6 +9,7 @@ use SON\Types\PessoaJuridica;
 class clienteDB{
 
 	private $cliente;
+	private $conexao;
 
 	public function __construct(\PDO $conexao){
 
